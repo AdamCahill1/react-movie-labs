@@ -24,20 +24,3 @@ const MoviePage = (props) => {
 };
 
 export default MoviePage;
-
-//getMovieImages(id).then((images) => {
-  // Filter for Languages images
-    // English: en
-    // French: fr
-    // German: de
-    // Spanish: es
-    // Italian: it
-    // Dutch: nl
-    // Russian: ru
-    // Chinese: zh
-    // Japanese: ja
-    // Korean: ko
-    // Arabic: ar
-  //const englishImages = images.filter(image => image.iso_639_1 === 'en');
-  //console.log(englishImages);
-  //setImages(englishImages);
