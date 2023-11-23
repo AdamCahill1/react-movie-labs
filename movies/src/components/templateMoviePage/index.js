@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
 
 const TemplateMoviePage = ({ movie, children }) => {
-  const [images, setImages] = useState([]);
+  const { data , error, isLoading, isError } = useQuery(
+    ["images", { id: movie.id }],
+    getMovieImages
+  );
 
-  useEffect(() => {
-    getMovieImages(movie.id).then((images) => {
-      // Filter for Languages images
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+
+  // Filter for Languages images
         // English: en
         // French: fr
         // German: de
@@ -22,15 +33,9 @@ const TemplateMoviePage = ({ movie, children }) => {
         // Japanese: ja
         // Korean: ko
         // Arabic: ar
-      const englishImages = images.filter(image => image.iso_639_1 === 'en');
-      console.log(englishImages);
-      setImages(englishImages);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-
-
+  const englishImages = data.posters.filter(image => image.iso_639_1 === 'ru');
+  const images = englishImages 
 
   return (
     <>
